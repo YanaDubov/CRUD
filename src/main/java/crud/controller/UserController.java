@@ -13,7 +13,7 @@ public class UserController {
         userSerializator = new UserSerializator();
     }
 
-    public List<User> showAll() {
+    public List<User> getAll() {
         return userSerializator.getAll();
     }
 

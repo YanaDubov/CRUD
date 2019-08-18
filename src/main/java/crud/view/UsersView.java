@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class UsersView {
 
-    private static final String HEADER = "INDEX   NAME   SURNAME   EMAIL   ROLES   MOBILE_NUMBER";
+    private static final String HEADER = "INDEX   NAME       SURNAME      EMAIL                ROLES       MOBILE_NUMBER";
     Scanner in;
     private UserController userController;
     public UsersView() {
@@ -20,20 +20,8 @@ public class UsersView {
     }
 
     public void showAll() {
-        AtomicInteger index = new AtomicInteger(1);
-        List<User> users = userController.showAll();
-        System.out.println(HEADER);
-        users.forEach(object -> {
-            System.out.print(index.getAndIncrement() + "       ");
-            System.out.print(object.getName() + "  ");
-            System.out.print(object.getSurname() + "  ");
-            System.out.print(object.getEmail() + "  ");
-            object.getRoles().forEach(value ->
-                    System.out.print(value.getRole() + " "));
-            object.getNumbers().forEach(value ->
-                    System.out.print(value.getNumber() + " "));
-            System.out.println();
-        });
+        List<User> users = userController.getAll();
+        printAllUsers(users);
     }
 
     public void addUser() {
@@ -41,19 +29,29 @@ public class UsersView {
     }
 
     public void updateUser() {
-        showAll();
+        List<User> users = userController.getAll();
+        printAllUsers(users);
         System.out.println("Enter index of user:");
         int index = in.nextInt();
         in.nextLine();
-        userController.updateUser(fillUser(),index);
+        if ((users.size() >= index) && (index != 0)) {
+            userController.updateUser(fillUser(), index);
+        }else {
+            System.out.println("Invalid index!");
+        }
     }
 
     public void deleteUser() {
-        showAll();
+        List<User> users = userController.getAll();
+        printAllUsers(users);
         System.out.println("Enter index of user:");
         int index = in.nextInt();
         in.nextLine();
-        userController.deleteUser(index);
+        if ((users.size() >= index) && (index != 0)) {
+            userController.deleteUser(index);
+        }else {
+            System.out.println("Invalid index!");
+        }
     }
 
     private User fillUser(){
@@ -89,7 +87,22 @@ public class UsersView {
             }
             numberSet.add(new Number(value));
         });
-//        Arrays.asList(numbers.split(" ")).forEach(value->numberSet.add(new Number(value)));
         return new User(name,surname,email,roleSet,numberSet);
+    }
+
+    private void printAllUsers(List<User> users){
+        AtomicInteger index = new AtomicInteger(1);
+        System.out.println(HEADER);
+        users.forEach(object -> {
+            System.out.printf("%-8s", index.getAndIncrement());
+            System.out.printf("%-11s", object.getName());
+            System.out.printf("%-13s",object.getSurname());
+            System.out.printf("%-21s", object.getEmail());
+            object.getRoles().forEach(value ->
+                    System.out.print(value.getRole() + " "));
+            object.getNumbers().forEach(value ->
+                    System.out.print(value.getNumber() + " "));
+            System.out.println();
+        });
     }
 }

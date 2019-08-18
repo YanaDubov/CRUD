@@ -17,40 +17,31 @@ public class UserSerializator {
             out.writeObject(users);
             out.flush();
         } catch (IOException e) {
-            System.out.println("Error read data from file");
+            System.out.println("Error add user");
         }
     }
 
     public void updateUser(User user, int index) {
         List<User> users = getAll();
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(paths))) {
-            if (users.size() >= index && index != 0) {
-                users.set(index - 1, user);
-                out.writeObject(users);
-                out.flush();
-                System.out.println("User updated successfully");
-            }else {
-                System.out.println("Invalid index!");
-            }
+            users.set(index - 1, user);
+            out.writeObject(users);
+            out.flush();
+            System.out.println("User updated successfully");
         } catch (IOException e) {
-            System.out.println("Error read data from file");
+            System.out.println("Error update user");
         }
     }
 
     public void deleteUser(int index) {
         List<User> users = getAll();
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(paths))) {
-            if (users.size() >= index && index != 0) {
-                users.remove(index - 1);
-                out.writeObject(users);
-                out.flush();
-                System.out.println("User deleted successfully");
-            } else {
-                System.out.println("Invalid index!");
-            }
-
+            users.remove(index - 1);
+            out.writeObject(users);
+            out.flush();
+            System.out.println("User deleted successfully");
         } catch (IOException e) {
-            System.out.println("Error read data from file");
+            System.out.println("Error delete user");
         }
     }
 
@@ -59,7 +50,7 @@ public class UserSerializator {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(paths))) {
             users = (List<User>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error read data from file");
+            System.out.println("Error get all users from file");
         }
         return users;
     }
