@@ -63,17 +63,4 @@ public class UserSerializator {
         }
         return users;
     }
-//    public static void main(String[] args){
-//        UserSerializator serializator = new UserSerializator();
-//        Role role = new Role("aaa");
-//        Set<Role> roleSet = new HashSet<>();
-//        roleSet.add(role);
-//        Number number = new Number("aaa");
-//        Set<Number> numbers = new HashSet<>();
-//        numbers.add(number);
-//        User user = new User("aaa","aaa","aaa",roleSet,numbers);
-//        serializator.addUser(user);
-//        List<User> users = serializator.getAll();
-//        System.out.println(users.get(0).getName());
-//    }
 }
