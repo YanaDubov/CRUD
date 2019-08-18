@@ -1,1 +1,2 @@
-# CRUD JAVA TEST TASK
+# JAVA TEST TASK
+CRUD console application 
