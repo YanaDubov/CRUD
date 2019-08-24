@@ -71,16 +71,26 @@ public class UsersView {
             System.out.println("Enter email: ");
             email = in.nextLine();
         }
-        System.out.println("Enter role(s) with a space: ");
+        System.out.println("Enter role(s) with a comma: ");
         roles = in.nextLine();
+        while (roles.codePoints().filter(ch -> ch ==',').count() >= 3){
+            System.out.println("You entered more than 3 roles. Try again..");
+            System.out.println("Enter role(s) with a space: ");
+            roles = in.nextLine();
+        }
         Set<Role> roleSet = new HashSet<>();
-        Arrays.asList(roles.split(" ")).forEach(value->roleSet.add(new Role(value)));
-        System.out.println("Enter mobile number(s) with a space: ");
+        Arrays.asList(roles.split(",")).forEach(value->roleSet.add(new Role(value)));
+        System.out.println("Enter mobile number(s) with a comma: ");
         numbers = in.nextLine();
+        while (numbers.codePoints().filter(ch -> ch ==',').count() >= 3){
+            System.out.println("You entered more than 3 numbers. Try again..");
+            System.out.println("Enter mobile number(s) with a space: ");
+            numbers = in.nextLine();
+        }
         Set<Number> numberSet = new HashSet<>();
-        String[] strings = numbers.split(" ");
+        String[] strings = numbers.split(",");
         Arrays.stream(strings).forEach(value -> {
-            while (!Pattern.matches("375\\d{9}", value)) {
+            while (!Pattern.matches("375\\d{2} \\d{7}", value)) {
                 System.out.println("Invalid mobile number "+ value+". Try again..");
                 System.out.println("Enter new number instead: ");
                 value = in.nextLine();
